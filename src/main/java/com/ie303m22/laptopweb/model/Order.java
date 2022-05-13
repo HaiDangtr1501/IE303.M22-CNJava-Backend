@@ -14,12 +14,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name = "order")
 public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="orderId")
+	@Column(name = "orderId")
 	private long orderId;
 	
 	@Column(name="totalPrice")
@@ -38,7 +39,6 @@ public class Order {
 	@JoinColumn(name = "userId")
 	private User userOrder;
 	
-	@OneToMany(mappedBy = "order")
+	@OneToMany(mappedBy = "orderDetail")
 	private List<OrderDetail> orderDetails = new ArrayList<>();
-	
 }

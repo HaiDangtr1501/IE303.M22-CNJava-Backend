@@ -29,6 +29,6 @@ public class OrderDetail {
 	
 	@ManyToOne
 	@JoinColumn(name = "orderId")
-	private Order order;
+	private Order orderDetail;
 	
 }

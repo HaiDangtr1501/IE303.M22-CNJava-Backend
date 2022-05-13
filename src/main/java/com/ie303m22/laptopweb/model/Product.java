@@ -1,7 +1,6 @@
 package com.ie303m22.laptopweb.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -46,8 +45,8 @@ public class Product {
 	private String[] listSubImg;
 	
 	
-	@OneToMany(mappedBy = "product")
-	private List<Product> commnets = new ArrayList<>();
+	@OneToMany(mappedBy = "productComment")
+	private List<Comment> commnets = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "productOrder")
 	private List<OrderDetail> orderDetails = new ArrayList<>();

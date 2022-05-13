@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "product")
+@Table(name = "comment")
 public class Comment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ public class Comment {
 	
 	@ManyToOne
 	@JoinColumn(name = "productId")
-	private Product product;
+	private Product productComment;
 	
 	@ManyToOne
 	@JoinColumn(name = "userId")

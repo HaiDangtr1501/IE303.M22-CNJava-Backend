@@ -46,8 +46,8 @@ public class User {
 	private String role;
 	
 	@OneToMany(mappedBy = "userComment")
-	private List<Product> commnets = new ArrayList<>();
+	private List<Comment> commnets = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "userOrder")
-	private List<Product> orders = new ArrayList<>();
+	private List<Order> orders = new ArrayList<>();
 }
