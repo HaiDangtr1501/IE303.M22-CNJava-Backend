@@ -29,11 +29,11 @@ public class Order {
 	@Column(name="timeCreate")
 	private Date timeCreate;
 	
-	@Column(name="cancleReason")
-	private String cancleReason;
+	@Column(name="cancelReason")
+	private String cancelReason;
 	
 	@Column(name="status")
-	private String status;
+	private Boolean status;
 	
 	@ManyToOne
 	@JoinColumn(name = "userId")
@@ -41,4 +41,87 @@ public class Order {
 	
 	@OneToMany(mappedBy = "orderDetail")
 	private List<OrderDetail> orderDetails = new ArrayList<>();
+
+	//Constructor methods
+	public Order() {
+	}
+
+	public Order(long orderId, float totalPrice, Date timeCreate, String cancelReason, Boolean status, User userOrder,
+			List<OrderDetail> orderDetails) {
+		this.orderId = orderId;
+		this.totalPrice = totalPrice;
+		this.timeCreate = timeCreate;
+		this.cancelReason = cancelReason;
+		this.status = status;
+		this.userOrder = userOrder;
+		this.orderDetails = orderDetails;
+	}
+
+	//Getter Setter
+	public long getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(long orderId) {
+		this.orderId = orderId;
+	}
+
+	public float getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(float totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public Date getTimeCreate() {
+		return timeCreate;
+	}
+
+	public void setTimeCreate(Date timeCreate) {
+		this.timeCreate = timeCreate;
+	}
+
+	public String getCancelReason() {
+		return cancelReason;
+	}
+
+	public void setCancelReason(String cancelReason) {
+		this.cancelReason = cancelReason;
+	}
+
+	public Boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
+
+	public User getUserOrder() {
+		return userOrder;
+	}
+
+	public void setUserOrder(User userOrder) {
+		this.userOrder = userOrder;
+	}
+
+	public List<OrderDetail> getOrderDetails() {
+		return orderDetails;
+	}
+
+	public void setOrderDetails(List<OrderDetail> orderDetails) {
+		this.orderDetails = orderDetails;
+	}
+
+	@Override
+	public String toString() {
+		return "Order [cancelReason=" + cancelReason + ", orderDetails=" + orderDetails + ", orderId=" + orderId
+				+ ", status=" + status + ", timeCreate=" + timeCreate + ", totalPrice=" + totalPrice + ", userOrder="
+				+ userOrder + "]";
+	}
+
+	
+
+	
 }

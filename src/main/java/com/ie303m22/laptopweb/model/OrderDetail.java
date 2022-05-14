@@ -30,5 +30,66 @@ public class OrderDetail {
 	@ManyToOne
 	@JoinColumn(name = "orderId")
 	private Order orderDetail;
+
+	//Constructor methods
+	public OrderDetail() {
+	}
+
+	public OrderDetail(long orderDetailId, int quantity, float detailPrice, Product productOrder, Order orderDetail) {
+		this.orderDetailId = orderDetailId;
+		this.quantity = quantity;
+		this.detailPrice = detailPrice;
+		this.productOrder = productOrder;
+		this.orderDetail = orderDetail;
+	}
+
+	//Getter - Setter
+	public long getOrderDetailId() {
+		return orderDetailId;
+	}
+
+	public void setOrderDetailId(long orderDetailId) {
+		this.orderDetailId = orderDetailId;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public float getDetailPrice() {
+		return detailPrice;
+	}
+
+	public void setDetailPrice(float detailPrice) {
+		this.detailPrice = detailPrice;
+	}
+
+	
+	public Product getProductOrder() {
+		return productOrder;
+	}
+
+	public void setProductOrder(Product productOrder) {
+		this.productOrder = productOrder;
+	}
+
+	public Order getOrderDetail() {
+		return orderDetail;
+	}
+
+	public void setOrderDetail(Order orderDetail) {
+		this.orderDetail = orderDetail;
+	}
+
+	@Override
+	public String toString() {
+		return "OrderDetail [detailPrice=" + detailPrice + ", orderDetail=" + orderDetail + ", orderDetailId="
+				+ orderDetailId + ", productOrder=" + productOrder + ", quantity=" + quantity + "]";
+	}
+
 	
 }
