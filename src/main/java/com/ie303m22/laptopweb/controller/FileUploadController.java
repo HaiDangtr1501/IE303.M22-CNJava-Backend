@@ -22,28 +22,26 @@ import com.ie303m22.laptopweb.services.IStorageService;
 @Controller
 @RequestMapping(path = "/api/v1/FileUpload")
 public class FileUploadController {
-	//this controller receive file/image from client
+	//Inject Storage Service here
     @Autowired
     private IStorageService storageService;
-	@PostMapping("")
-	public ResponseEntity<ResponseObject> uploadFile(@RequestParam("file")MultipartFile file){
-		try {
-			//save files to a folder => use a service 
+    @PostMapping("")
+    public ResponseEntity<ResponseObject> uploadFile(@RequestParam("file")MultipartFile file) {
+        try {
+            //save files to a folder => use a service
             String generatedFileName = storageService.storeFile(file);
             return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "upload file successfully", generatedFileName)
+               new ResponseObject("ok", "upload file successfully", generatedFileName)
             );
-		}
-		catch (Exception exception){
-			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
-                new ResponseObject("failed", exception.getMessage(), "")
+            //06a290064eb94a02a58bfeef36002483.png => how to open this file in Web Browser ?
+        }catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
+               new ResponseObject("ok", exception.getMessage(), "")
             );
-		}
-	}
-
-	//get img url
-	@GetMapping("/files/{fileName:.+}")
-     // /files/e03171ef00d744348580db9e8b8adb7e.png
+        }
+    }
+    //get image's url
+    @GetMapping("/files/{fileName:.+}")
     public ResponseEntity<byte[]> readDetailFile(@PathVariable String fileName) {
         try {
             byte[] bytes = storageService.readFileContent(fileName);
@@ -55,9 +53,9 @@ public class FileUploadController {
             return ResponseEntity.noContent().build();
         }
     }
-	//How to load all uploaded files ?
+    //How to load all uploaded files ?
     @GetMapping("")
-    public ResponseEntity<ResponseObject> getAllUploadedFiles() {
+    public ResponseEntity<ResponseObject> getUploadedFiles() {
         try {
             List<String> urls = storageService.loadAll()
                     .map(path -> {

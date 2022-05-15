@@ -19,9 +19,8 @@ import java.util.stream.Stream;
 
 @Service
 public class ImageStorageService implements IStorageService{
-
     private final Path storageFolder = Paths.get("uploads");
-    //constructor 
+    //constructor
     public ImageStorageService() {
         try {
             Files.createDirectories(storageFolder);
@@ -37,37 +36,38 @@ public class ImageStorageService implements IStorageService{
     }
     @Override
     public String storeFile(MultipartFile file) {
-        try{
-            if(file.isEmpty()){
-                throw new RuntimeException("Không thể lưu trữ tệp trống.");
+        try {
+            System.out.println("haha");
+            if (file.isEmpty()) {
+                throw new RuntimeException("Failed to store empty file.");
             }
-            //kiem tra file anh
-            if(!isImageFile(file)){
-                throw new RuntimeException("Bạn chỉ có thể tải tệp hình anhe.");
+            //check file is image ?
+            if(!isImageFile(file)) {
+                throw new RuntimeException("You can only upload image file");
             }
-            //file <= 5Mb
-            float fileSizeInMegabyte = file.getSize() / 1_000_000;
-            if(fileSizeInMegabyte > 5.0f){
-                throw new RuntimeException("File phải <= 5Mb.");
+            //file must be <= 5Mb
+            float fileSizeInMegabytes = file.getSize() / 1_000_000.0f;
+            if(fileSizeInMegabytes > 5.0f) {
+                throw new RuntimeException("File must be <= 5Mb");
             }
-            //file must be rename
+            //File must be rename, why ?
             String fileExtension = FilenameUtils.getExtension(file.getOriginalFilename());
             String generatedFileName = UUID.randomUUID().toString().replace("-", "");
             generatedFileName = generatedFileName+"."+fileExtension;
             Path destinationFilePath = this.storageFolder.resolve(
-                Paths.get(generatedFileName))
-                .normalize().toAbsolutePath();
-            if(!destinationFilePath.getParent().equals(this.storageFolder.toAbsolutePath())){
-                throw new RuntimeException("Không thể lưu trữ tệp bên ngoài thư mục hiện tại.");
+                            Paths.get(generatedFileName))
+                    .normalize().toAbsolutePath();
+            if (!destinationFilePath.getParent().equals(this.storageFolder.toAbsolutePath())) {
+                throw new RuntimeException(
+                        "Cannot store file outside current directory.");
             }
-            try(InputStream inputStream = file.getInputStream()){
+            try (InputStream inputStream = file.getInputStream()) {
                 Files.copy(inputStream, destinationFilePath, StandardCopyOption.REPLACE_EXISTING);
             }
             return generatedFileName;
-
         }
-        catch(IOException exception){
-            throw new RuntimeException("Không lưu trữ được tệp. ", exception);
+        catch (IOException exception) {
+            throw new RuntimeException("Failed to store file.", exception);
         }
     }
 
@@ -83,6 +83,7 @@ public class ImageStorageService implements IStorageService{
         catch (IOException e) {
             throw new RuntimeException("Failed to load stored files", e);
         }
+
     }
 
     @Override
@@ -105,11 +106,7 @@ public class ImageStorageService implements IStorageService{
     }
 
     @Override
-    public void deleteAllFile() {
-        // TODO Auto-generated method stub
-        
-    }
+    public void deleteAllFiles() {
 
-    
-    
+    }
 }

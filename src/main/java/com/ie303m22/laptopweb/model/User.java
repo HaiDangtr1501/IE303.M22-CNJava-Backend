@@ -39,9 +39,6 @@ public class User {
 	@Column(name= "email")
 	private String email;
 	
-	@Column(name= "image")
-	private String image;
-	
 	@Column(name= "role")
 	private String role;
 	
@@ -50,6 +47,9 @@ public class User {
 	
 	@OneToMany(mappedBy = "userOrder")
 	private List<Order> orders = new ArrayList<>();
+
+	@OneToMany(mappedBy = "userImg")
+	private List<Image> userImages = new ArrayList<>();
 
 	public User() {
 	}
@@ -62,7 +62,6 @@ public class User {
 		this.displayName = displayName;
 		this.phone = phone;
 		this.email = email;
-		this.image = image;
 		this.role = role;
 		this.comments = comments;
 		this.orders = orders;
@@ -116,14 +115,6 @@ public class User {
 		this.email = email;
 	}
 
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
-
 	public String getRole() {
 		return role;
 	}
@@ -150,7 +141,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [comments=" + comments + ", displayName=" + displayName + ", email=" + email + ", image=" + image
+		return "User [comments=" + comments + ", displayName=" + displayName + ", email=" + email 
 				+ ", orders=" + orders + ", password=" + password + ", phone=" + phone + ", role=" + role + ", userId="
 				+ userId + ", userName=" + userName + "]";
 	}

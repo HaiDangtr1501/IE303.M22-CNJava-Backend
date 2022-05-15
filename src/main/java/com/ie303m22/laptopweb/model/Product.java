@@ -29,12 +29,15 @@ public class Product {
 	
 	@Column(name = "newPrice")
 	private double newPrice;
-	
-	@Column(name = "mainImg")
-	private String mainImg;
+
+	@Column(name = "quantity")
+	private double quantity;
 	
 	@Column(name = "content")
 	private String content;
+
+	@Column(name = "mainImg")
+	private String mainImg;
 
 	@Column(name = "category")
 	private String category;
@@ -48,40 +51,64 @@ public class Product {
 	@Column(name = "star")
 	private float star;
 	
-	@Column(name = "image")
-	private String image;
-
-	@Column(name="listSubImg")
-	private String[] listSubImg;
-	
-	
 	@OneToMany(mappedBy = "productComment")
 	private List<Comment> comments = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "productOrder")
 	private List<OrderDetail> orderDetails = new ArrayList<>();
 
+	@OneToMany(mappedBy = "productImg")
+	private List<Image> productImages = new ArrayList<>();
+
+
 	public Product() {
 	}
 
-	public Product(long productId, String productName, double oldPrice, double newPrice, String mainImg, String content,
-			String category, String type, String brand, float star, String image, String[] listSubImg,
-			List<Comment> comments, List<OrderDetail> orderDetails) {
+
+	public Product(long productId, String productName, double oldPrice, double newPrice, double quantity,
+			String content, String mainImg, String category, String type, String brand, float star,
+			List<Comment> comments, List<OrderDetail> orderDetails, List<Image> productImages) {
 		this.productId = productId;
 		this.productName = productName;
 		this.oldPrice = oldPrice;
 		this.newPrice = newPrice;
-		this.mainImg = mainImg;
+		this.quantity = quantity;
 		this.content = content;
+		this.mainImg = mainImg;
 		this.category = category;
 		this.type = type;
 		this.brand = brand;
 		this.star = star;
-		this.image = image;
-		this.listSubImg = listSubImg;
 		this.comments = comments;
 		this.orderDetails = orderDetails;
+		this.productImages = productImages;
 	}
+
+
+	public double getQuantity() {
+		return quantity;
+	}
+
+	public void setProductImages(List<Image> productImages) {
+		this.productImages = productImages;
+	}
+
+
+
+	public void setQuantity(double quantity) {
+		this.quantity = quantity;
+	}
+
+
+	public String getMainImg() {
+		return mainImg;
+	}
+
+
+	public void setMainImg(String mainImg) {
+		this.mainImg = mainImg;
+	}
+
 
 	public long getProductId() {
 		return productId;
@@ -115,13 +142,6 @@ public class Product {
 		this.newPrice = newPrice;
 	}
 
-	public String getMainImg() {
-		return mainImg;
-	}
-
-	public void setMainImg(String mainImg) {
-		this.mainImg = mainImg;
-	}
 
 	public String getContent() {
 		return content;
@@ -163,22 +183,6 @@ public class Product {
 		this.star = star;
 	}
 
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
-
-	public String[] getListSubImg() {
-		return listSubImg;
-	}
-
-	public void setListSubImg(String[] listSubImg) {
-		this.listSubImg = listSubImg;
-	}
-
 	public List<Comment> getComments() {
 		return comments;
 	}
@@ -195,15 +199,13 @@ public class Product {
 		this.orderDetails = orderDetails;
 	}
 
+
 	@Override
 	public String toString() {
 		return "Product [brand=" + brand + ", category=" + category + ", comments=" + comments + ", content=" + content
-				+ ", image=" + image + ", listSubImg=" + Arrays.toString(listSubImg) + ", mainImg=" + mainImg
-				+ ", newPrice=" + newPrice + ", oldPrice=" + oldPrice + ", orderDetails=" + orderDetails
-				+ ", productId=" + productId + ", productName=" + productName + ", star=" + star + ", type=" + type
-				+ "]";
-	}	
+				+ ", mainImg=" + mainImg + ", newPrice=" + newPrice + ", oldPrice=" + oldPrice + ", orderDetails="
+				+ orderDetails + ", productId=" + productId + ", productImages=" + productImages + ", productName="
+				+ productName + ", quantity=" + quantity + ", star=" + star + ", type=" + type + "]";
+	}
 
-	
-	
 }
