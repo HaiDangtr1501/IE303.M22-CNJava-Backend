@@ -1,150 +1,129 @@
 package com.ie303m22.laptopweb.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name= "userId")
-	private long userId;
-	
-	@Column(name= "user_name", nullable = false, unique = true)
-	private String userName;
-	
-	@Column(name= "password", nullable = false)
-	private String password;
-	
-	@Column(name= "display_name", nullable = false)
-	private String displayName;
-	
-	@Column(name= "phone")
-	private String phone;
-	
-	@Column(name= "email")
-	private String email;
-	
-	@Column(name= "role")
-	private String role;
-	
-	@OneToMany(mappedBy = "userComment")
-	private List<Comment> comments = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "userOrder")
-	private List<Order> orders = new ArrayList<>();
+	private Long id;
 
-	@OneToMany(mappedBy = "userImg")
-	private List<Image> userImages = new ArrayList<>();
+	@OneToOne(mappedBy = "user")
+	private UserCredential userCredential;
+
+	@Temporal(value = TemporalType.DATE)
+	@Column(name = "created_date")
+	private Date createdDate;
+
+	@Column(name = "name")
+	private String name;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_info_id")
+	private UserContact userContact = new UserContact();
+
+	@OneToMany(mappedBy = "user", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+			CascadeType.REFRESH })
+	private Set<Product> products = new HashSet<>();
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private Set<Review> reviews = new HashSet<>();
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private Set<Order> orders = new HashSet<>();
+
+	private String avatarUrl;
 
 	public User() {
+		this.createdDate = new Date();
 	}
 
-	public User(long userId, String userName, String password, String displayName, String phone, String email,
-			String image, String role, List<Comment> comments, List<Order> orders) {
-		this.userId = userId;
-		this.userName = userName;
-		this.password = password;
-		this.displayName = displayName;
-		this.phone = phone;
-		this.email = email;
-		this.role = role;
-		this.comments = comments;
-		this.orders = orders;
+	public Long getId() {
+		return id;
 	}
 
-	public long getUserId() {
-		return userId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public Date getCreatedDate() {
+		return createdDate;
 	}
 
-	public String getUserName() {
-		return userName;
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public String getName() {
+		return name;
 	}
 
-	public String getPassword() {
-		return password;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public UserContact getUserInfo() {
+		return userContact;
 	}
 
-	public String getDisplayName() {
-		return displayName;
+	public void setUserInfo(UserContact userContact) {
+		this.userContact = userContact;
 	}
 
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
+	public Set<Product> getProducts() {
+		return products;
 	}
 
-	public String getPhone() {
-		return phone;
+	public void setProducts(Set<Product> products) {
+		this.products = products;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public Set<Review> getReviews() {
+		return reviews;
 	}
 
-	public String getEmail() {
-		return email;
+	public void setReviews(Set<Review> reviews) {
+		this.reviews = reviews;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public String getAvatarUrl() {
+		return avatarUrl;
 	}
 
-	public String getRole() {
-		return role;
+	public void setAvatarUrl(String avatarUrl) {
+		this.avatarUrl = avatarUrl;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public UserCredential getUserCredential() {
+		return userCredential;
 	}
 
-	public List<Comment> getComments() {
-		return comments;
+	public void setUserCredential(UserCredential userCredential) {
+		this.userCredential = userCredential;
 	}
 
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
-	}
-
-	public List<Order> getOrders() {
+	public Set<Order> getOrders() {
 		return orders;
 	}
 
-	public void setOrders(List<Order> orders) {
+	public void setOrders(Set<Order> orders) {
 		this.orders = orders;
 	}
 
-	@Override
-	public String toString() {
-		return "User [comments=" + comments + ", displayName=" + displayName + ", email=" + email 
-				+ ", orders=" + orders + ", password=" + password + ", phone=" + phone + ", role=" + role + ", userId="
-				+ userId + ", userName=" + userName + "]";
-	}
-
-	
 }

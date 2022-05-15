@@ -1,211 +1,204 @@
 package com.ie303m22.laptopweb.model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+// import com.congnghejava.webbanhang.utils.UrlImageUtils;
 
 @Entity
-@Table(name = "product")
+@Table(name = "products")
 public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "productId")
-	private long productId;
-	
-	@Column(name = "productName", unique = true, nullable = false)
-	private String productName;
-	
-	@Column(name = "oldPrice")
-	private double oldPrice;
-	
-	@Column(name = "newPrice")
-	private double newPrice;
+	private Long id;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	private User user;
+
+	@ManyToOne
+	@JoinColumn(name = "category_id")
+	private Category category;
+
+	@ManyToOne
+	@JoinColumn(name = "brand_id")
+	private Brand brand;
+
+	@Column(name = "created_date")
+	private Date createdDate = new Date();
+
+	@Column(name = "name")
+	private String name;
+
+	@Column(name = "description", columnDefinition = "text")
+	private String description;
+
+	@Column(name = "price")
+	private int price;
 
 	@Column(name = "quantity")
-	private double quantity;
-	
-	@Column(name = "content")
-	private String content;
+	private int quantity;
 
-	@Column(name = "mainImg")
-	private String mainImg;
+	@Column(name = "discount")
+	private int discount;
 
-	@Column(name = "category")
-	private String category;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "product_details_id")
+	private ProductDetails details;
 
-	@Column(name = "type")
-	private String type;
-	
-	@Column(name = "brand")
-	private String brand;
-	
-	@Column(name = "star")
-	private float star;
-	
-	@OneToMany(mappedBy = "productComment")
-	private List<Comment> comments = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "productOrder")
-	private List<OrderDetail> orderDetails = new ArrayList<>();
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+	private Set<ProductImage> images = new HashSet<>();
 
-	@OneToMany(mappedBy = "productImg")
-	private List<Image> productImages = new ArrayList<>();
-
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "product")
+	private Set<Review> reviews = new HashSet<>();
 
 	public Product() {
 	}
 
-
-	public Product(long productId, String productName, double oldPrice, double newPrice, double quantity,
-			String content, String mainImg, String category, String type, String brand, float star,
-			List<Comment> comments, List<OrderDetail> orderDetails, List<Image> productImages) {
-		this.productId = productId;
-		this.productName = productName;
-		this.oldPrice = oldPrice;
-		this.newPrice = newPrice;
-		this.quantity = quantity;
-		this.content = content;
-		this.mainImg = mainImg;
+	// @formatter:off
+	public Product(String name, 
+				   String description, 
+				   Category category, 
+				   Brand brand, 
+				   int price,
+				   int quantity, 
+				   int discount,
+				   ProductDetails details) {
+		this.name = name;
+		this.description = description;
 		this.category = category;
-		this.type = type;
 		this.brand = brand;
-		this.star = star;
-		this.comments = comments;
-		this.orderDetails = orderDetails;
-		this.productImages = productImages;
+		this.price = price;
+		this.quantity = quantity;
+		this.discount = discount;
+		this.details = details;
+	}
+	// @formatter:on
+
+	public Long getId() {
+		return id;
 	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-	public double getQuantity() {
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Set<ProductImage> getImages() {
+		return images;
+	}
+
+	public void setImages(Set<ProductImage> images) {
+		this.images = images;
+	}
+
+	public Set<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(Set<Review> reviews) {
+		this.reviews = reviews;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public int getQuantity() {
 		return quantity;
 	}
 
-	public void setProductImages(List<Image> productImages) {
-		this.productImages = productImages;
-	}
-
-
-
-	public void setQuantity(double quantity) {
+	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
 
-
-	public String getMainImg() {
-		return mainImg;
+	public int getDiscount() {
+		return discount;
 	}
 
-
-	public void setMainImg(String mainImg) {
-		this.mainImg = mainImg;
+	public void setDiscount(int discount) {
+		this.discount = discount;
 	}
 
-
-	public long getProductId() {
-		return productId;
+	public Date getCreatedDate() {
+		return createdDate;
 	}
 
-	public void setProductId(long productId) {
-		this.productId = productId;
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 
-	public String getProductName() {
-		return productName;
-	}
-
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
-
-	public double getOldPrice() {
-		return oldPrice;
-	}
-
-	public void setOldPrice(double oldPrice) {
-		this.oldPrice = oldPrice;
-	}
-
-	public double getNewPrice() {
-		return newPrice;
-	}
-
-	public void setNewPrice(double newPrice) {
-		this.newPrice = newPrice;
-	}
-
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
-	public String getCategory() {
+	public Category getCategory() {
 		return category;
 	}
 
-	public void setCategory(String category) {
+	public void setCategory(Category category) {
 		this.category = category;
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public String getBrand() {
+	public Brand getBrand() {
 		return brand;
 	}
 
-	public void setBrand(String brand) {
+	public void setBrand(Brand brand) {
 		this.brand = brand;
 	}
 
-	public float getStar() {
-		return star;
+	public ProductDetails getDetails() {
+		return details;
 	}
 
-	public void setStar(float star) {
-		this.star = star;
+	public void setDetails(ProductDetails details) {
+		this.details = details;
 	}
 
-	public List<Comment> getComments() {
-		return comments;
-	}
+	// public String getUrlOfficalImage() {
+	// 	UrlImageUtils urlImageUtils = new UrlImageUtils();
+	// 	ProductImage imageOfficial = images.stream()
+	// 			.filter(image -> image.getType() == EProductImageTypeDisplay.Official).findAny().orElseGet(null);
 
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
-	}
-
-	public List<OrderDetail> getOrderDetails() {
-		return orderDetails;
-	}
-
-	public void setOrderDetails(List<OrderDetail> orderDetails) {
-		this.orderDetails = orderDetails;
-	}
-
-
-	@Override
-	public String toString() {
-		return "Product [brand=" + brand + ", category=" + category + ", comments=" + comments + ", content=" + content
-				+ ", mainImg=" + mainImg + ", newPrice=" + newPrice + ", oldPrice=" + oldPrice + ", orderDetails="
-				+ orderDetails + ", productId=" + productId + ", productImages=" + productImages + ", productName="
-				+ productName + ", quantity=" + quantity + ", star=" + star + ", type=" + type + "]";
-	}
+	// 	return urlImageUtils.buildPathWithName(imageOfficial.getName());
+	// }
 
 }

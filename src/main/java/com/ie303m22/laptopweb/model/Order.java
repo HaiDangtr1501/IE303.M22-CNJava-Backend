@@ -1,127 +1,132 @@
 package com.ie303m22.laptopweb.model;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
-@Table(name = "order")
-public class Order {
+@Table(name = "orders")
+@EntityListeners(AuditingEntityListener.class)
+public class Order extends Auditable<Long> {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "orderId")
-	private long orderId;
-	
-	@Column(name="totalPrice")
-	private float totalPrice;
-	
-	@Column(name="timeCreate")
-	private Date timeCreate;
-	
-	@Column(name="cancelReason")
-	private String cancelReason;
-	
-	@Column(name="status")
-	private Boolean status;
-	
-	@ManyToOne
-	@JoinColumn(name = "userId")
-	private User userOrder;
-	
-	@OneToMany(mappedBy = "orderDetail")
-	private List<OrderDetail> orderDetails = new ArrayList<>();
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid", strategy = "uuid2")
+	private String id;
 
-	//Constructor methods
+	@ManyToOne
+	@JoinColumn(name = "user_id", nullable = false)
+	private User user;
+
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+	private Set<OrderItem> orderItems = new HashSet<>();
+
+	@Enumerated(EnumType.STRING)
+	@Column(length = 20)
+	private EOrderStatus status;
+
+	private Boolean settled = false;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "payment_method")
+	private EPaymentMethod paymentMethod;
+
+	private String stripeChagreId;
+
 	public Order() {
 	}
 
-	public Order(long orderId, float totalPrice, Date timeCreate, String cancelReason, Boolean status, User userOrder,
-			List<OrderDetail> orderDetails) {
-		this.orderId = orderId;
-		this.totalPrice = totalPrice;
-		this.timeCreate = timeCreate;
-		this.cancelReason = cancelReason;
-		this.status = status;
-		this.userOrder = userOrder;
-		this.orderDetails = orderDetails;
+	public Order(User user, List<Cart> listCart) {
+		this.user = user;
+		listCart.forEach(cart -> {
+			orderItems.add(new OrderItem(this, cart));
+		});
+		this.status = EOrderStatus.Open;
+		this.paymentMethod = EPaymentMethod.Cod;
+
 	}
 
-	//Getter Setter
-	public long getOrderId() {
-		return orderId;
+	public String getId() {
+		return id;
 	}
 
-	public void setOrderId(long orderId) {
-		this.orderId = orderId;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public float getTotalPrice() {
-		return totalPrice;
+	public User getUser() {
+		return user;
 	}
 
-	public void setTotalPrice(float totalPrice) {
-		this.totalPrice = totalPrice;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	public Date getTimeCreate() {
-		return timeCreate;
+	public Set<OrderItem> getOrderItems() {
+		return orderItems;
 	}
 
-	public void setTimeCreate(Date timeCreate) {
-		this.timeCreate = timeCreate;
+	public void setOrderItems(Set<OrderItem> orderItems) {
+		this.orderItems = orderItems;
 	}
 
-	public String getCancelReason() {
-		return cancelReason;
-	}
-
-	public void setCancelReason(String cancelReason) {
-		this.cancelReason = cancelReason;
-	}
-
-	public Boolean getStatus() {
+	public EOrderStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(Boolean status) {
+	public void setStatus(EOrderStatus status) {
 		this.status = status;
 	}
 
-	public User getUserOrder() {
-		return userOrder;
+	public boolean isSettled() {
+		return settled;
 	}
 
-	public void setUserOrder(User userOrder) {
-		this.userOrder = userOrder;
+	public void setSettled(boolean settled) {
+		this.settled = settled;
 	}
 
-	public List<OrderDetail> getOrderDetails() {
-		return orderDetails;
+	public Long getTotal() {
+		return orderItems.stream().mapToLong(OrderItem::getTotal).sum();
 	}
 
-	public void setOrderDetails(List<OrderDetail> orderDetails) {
-		this.orderDetails = orderDetails;
+	public Boolean getSettled() {
+		return settled;
 	}
 
-	@Override
-	public String toString() {
-		return "Order [cancelReason=" + cancelReason + ", orderDetails=" + orderDetails + ", orderId=" + orderId
-				+ ", status=" + status + ", timeCreate=" + timeCreate + ", totalPrice=" + totalPrice + ", userOrder="
-				+ userOrder + "]";
+	public void setSettled(Boolean settled) {
+		this.settled = settled;
 	}
 
-	
+	public EPaymentMethod getPaymentMethod() {
+		return paymentMethod;
+	}
 
-	
+	public void setPaymentMethod(EPaymentMethod paymentMethod) {
+		this.paymentMethod = paymentMethod;
+	}
+
+	public String getStripeChagreId() {
+		return stripeChagreId;
+	}
+
+	public void setStripeChagreId(String stripeChagreId) {
+		this.stripeChagreId = stripeChagreId;
+	}
+
 }
