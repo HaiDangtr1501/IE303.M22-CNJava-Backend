@@ -17,7 +17,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-// import com.congnghejava.webbanhang.utils.UrlImageUtils;
+import com.ie303m22.laptopweb.utils.UrlImageUtils;
+
+
 
 @Entity
 @Table(name = "products")
@@ -193,12 +195,12 @@ public class Product {
 		this.details = details;
 	}
 
-	// public String getUrlOfficalImage() {
-	// 	UrlImageUtils urlImageUtils = new UrlImageUtils();
-	// 	ProductImage imageOfficial = images.stream()
-	// 			.filter(image -> image.getType() == EProductImageTypeDisplay.Official).findAny().orElseGet(null);
+	public String getUrlOfficalImage() {
+		UrlImageUtils urlImageUtils = new UrlImageUtils();
+		ProductImage imageOfficial = images.stream()
+				.filter(image -> image.getType() == EProductImageTypeDisplay.Official).findAny().orElseGet(null);
 
-	// 	return urlImageUtils.buildPathWithName(imageOfficial.getName());
-	// }
+		return urlImageUtils.buildPathWithName(imageOfficial.getName());
+	}
 
 }
