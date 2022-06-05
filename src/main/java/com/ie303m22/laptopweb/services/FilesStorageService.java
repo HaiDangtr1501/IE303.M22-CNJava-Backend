@@ -3,11 +3,11 @@ package com.ie303m22.laptopweb.services;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
-import com.ie303m22.laptopweb.model.EProductImageTypeDisplay;
-import com.ie303m22.laptopweb.model.Product;
-
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.ie303m22.laptopweb.model.EProductImageTypeDisplay;
+import com.ie303m22.laptopweb.model.Product;
 
 
 

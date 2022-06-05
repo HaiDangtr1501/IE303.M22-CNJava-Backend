@@ -6,10 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.ie303m22.laptopweb.payload.response.FileUploadResponse;
-import com.ie303m22.laptopweb.payload.response.MessageResponse;
-import com.ie303m22.laptopweb.services.FilesStorageService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
+
+import com.ie303m22.laptopweb.payload.response.FileUploadResponse;
+import com.ie303m22.laptopweb.payload.response.MessageResponse;
+import com.ie303m22.laptopweb.services.FilesStorageService;
 
 @RestController
 @RequestMapping("/files")
