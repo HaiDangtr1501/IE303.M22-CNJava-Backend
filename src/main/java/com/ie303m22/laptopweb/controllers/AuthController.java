@@ -31,11 +31,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ie303m22.laptopweb.exception.BadRequestException;
-import com.ie303m22.laptopweb.model.AuthProvider;
-import com.ie303m22.laptopweb.model.ERole;
-import com.ie303m22.laptopweb.model.Mail;
-import com.ie303m22.laptopweb.model.Role;
-import com.ie303m22.laptopweb.model.UserCredential;
+import com.ie303m22.laptopweb.models.AuthProvider;
+import com.ie303m22.laptopweb.models.ERole;
+import com.ie303m22.laptopweb.models.Mail;
+import com.ie303m22.laptopweb.models.Role;
+import com.ie303m22.laptopweb.models.UserCredential;
 import com.ie303m22.laptopweb.payload.request.LoginRequest;
 import com.ie303m22.laptopweb.payload.request.SignupRequest;
 import com.ie303m22.laptopweb.payload.response.AuthResponse;
@@ -43,7 +43,7 @@ import com.ie303m22.laptopweb.payload.response.EmailVerifyExpiredResponse;
 import com.ie303m22.laptopweb.payload.response.MessageResponse;
 import com.ie303m22.laptopweb.repository.RoleRepository;
 import com.ie303m22.laptopweb.repository.UserCredentialRepository;
-import com.ie303m22.laptopweb.sercurity.jwtToken.TokenProvider;
+import com.ie303m22.laptopweb.security.jwtToken.TokenProvider;
 import com.ie303m22.laptopweb.services.EmailSenderService;
 import com.ie303m22.laptopweb.utils.UrlImageUtils;
 

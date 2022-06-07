@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
-import com.ie303m22.laptopweb.model.Mail;
+import com.ie303m22.laptopweb.models.Mail;
 
 @Service
 public class EmailSenderService {

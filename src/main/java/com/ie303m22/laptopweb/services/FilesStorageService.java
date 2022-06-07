@@ -6,8 +6,8 @@ import java.util.stream.Stream;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ie303m22.laptopweb.model.EProductImageTypeDisplay;
-import com.ie303m22.laptopweb.model.Product;
+import com.ie303m22.laptopweb.models.EProductImageTypeDisplay;
+import com.ie303m22.laptopweb.models.Product;
 
 
 

@@ -1,0 +1,5 @@
+package com.ie303m22.laptopweb.models;
+
+public enum AuthProvider {
+	local, facebook, google
+}
