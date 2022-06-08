@@ -2,14 +2,13 @@ package com.ie303m22.laptopweb.repository.criteria;
 
 
 public class ProductSearchCriteria {
-	private String name;
+    private String name;
 	private String brand;
 	private String catorory;
 	private Integer minPrice;
 	private Integer maxPrice;
 
 	public ProductSearchCriteria() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public ProductSearchCriteria(String name, String brand, String catorory, int minPrice, int maxPrice) {

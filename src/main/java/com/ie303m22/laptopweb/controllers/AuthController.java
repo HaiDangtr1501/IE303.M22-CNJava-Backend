@@ -1,0 +1,234 @@
+package com.ie303m22.laptopweb.controllers;
+
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
+import javax.mail.MessagingException;
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.ie303m22.laptopweb.exception.BadRequestException;
+import com.ie303m22.laptopweb.models.AuthProvider;
+import com.ie303m22.laptopweb.models.ERole;
+import com.ie303m22.laptopweb.models.Mail;
+import com.ie303m22.laptopweb.models.Role;
+import com.ie303m22.laptopweb.models.UserCredential;
+import com.ie303m22.laptopweb.payload.request.LoginRequest;
+import com.ie303m22.laptopweb.payload.request.SignupRequest;
+import com.ie303m22.laptopweb.payload.response.AuthResponse;
+import com.ie303m22.laptopweb.payload.response.EmailVerifyExpiredResponse;
+import com.ie303m22.laptopweb.payload.response.MessageResponse;
+import com.ie303m22.laptopweb.repository.RoleRepository;
+import com.ie303m22.laptopweb.repository.UserCredentialRepository;
+import com.ie303m22.laptopweb.security.jwtToken.TokenProvider;
+import com.ie303m22.laptopweb.services.EmailSenderService;
+import com.ie303m22.laptopweb.utils.UrlImageUtils;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
+
+@RestController
+@RequestMapping("/auth")
+public class AuthController {
+    UrlImageUtils urlImageUtils = new UrlImageUtils();
+
+	private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
+
+	@Autowired
+	AuthenticationManager authenticationManager;
+
+	@Autowired
+	UserCredentialRepository userCredentialRepository; //Kiểm tra email trong csdl
+
+	@Autowired
+	RoleRepository RoleRepository; //Mặc định người dùng đăng ký tài khoản mới với role là ROLE_USER
+
+	@Autowired
+	PasswordEncoder passwordEncoder;
+
+	@Autowired
+	TokenProvider tokenProvider; // Thiết lập token
+
+	@Autowired
+	EmailSenderService emailSenderService; // Xác nhận email
+
+	@Value("${spring.mail.username}")
+	private String adminEmail;
+
+	@Value("${app.auth.mailTokenExpirationMsec}")
+	private int mailTokenExpirationMsec;
+
+	@Value("${app.auth.resetPasswordSecret}")
+	private String resetPasswordSecret;
+
+	@Value("${app.auth.emailConfirmSecret}")
+	private String emailConfirmSecret;
+
+	private String resetPasswordTokenSubject = "resetPasswordToken";
+
+	private String confirmUserEmailTokenSubject = "confirmUserEmailToken";
+
+	@PostMapping("/login")
+	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+		if (!userCredentialRepository.existsByEmail(loginRequest.getEmail())) {
+			throw new BadRequestException("Not found email");
+		}
+		Authentication authentication = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		String token = tokenProvider.createToken(authentication);
+
+		return ResponseEntity.ok(new AuthResponse(token));
+	}
+	@PostMapping("/signup")
+	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest)
+			throws MailException, MessagingException {
+
+		Map<String, String> errors = new HashMap<>();
+		if (!signupRequest.getPassword().equals(signupRequest.getConfirmPassword())) {
+			errors.put("confirmPassword", "Mật khẩu xác nhận không đúng");
+		}
+
+		if (userCredentialRepository.existsByEmail(signupRequest.getEmail())) {
+			errors.put("email", "Email đã đăng ký");
+		}
+
+		if (errors.size() > 0) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+		}
+
+		String name = signupRequest.getName();
+		UserCredential user = new UserCredential(signupRequest.getEmail(),
+				passwordEncoder.encode(signupRequest.getPassword()), AuthProvider.local);
+
+		Role roleUser = RoleRepository.findByName(ERole.ROLE_USER).get();
+		user.setRoles(new HashSet<>(Arrays.asList(roleUser)));
+		user.getUser().setName(name);
+		user.getUser().setAvatarUrl(urlImageUtils.buildPathWithName("default-avatar.png"));
+
+		userCredentialRepository.save(user);
+
+		sendMailConfirm(signupRequest.getEmail());
+
+		return ResponseEntity.ok(new MessageResponse("Đăng ký thành công, truy cập email để xác nhận tài khoản"));
+	}
+
+	//Gửi mail khi đăng ký thành công
+	@PostMapping("/confirm-user-email")
+	public ResponseEntity<?> sendMailConfirm(@RequestBody String email) throws MailException, MessagingException {
+
+		Optional<UserCredential> userCredential = userCredentialRepository.findByEmail(email);
+
+		if (!userCredential.isPresent()) {
+			throw new BadRequestException("Không có tài khoản với email " + email);
+		}
+
+		if (userCredential.get().getEmailVerified()) {
+			throw new BadRequestException("Email đã được xác nhận trước đó");
+		}
+
+		String token = generateConfirmToken(userCredential.get(), emailConfirmSecret, confirmUserEmailTokenSubject);
+		String confirmUserEmailUrl = "http://localhost:3000/confirm-user-email/" + token;
+
+		Mail mail = new Mail();
+
+		mail.setFrom(adminEmail);
+		mail.setTo(email);
+		mail.setSubject("Xác nhận email "+ email +" để kích hoạt tài khoản đăng nhập");
+
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("confirmUserEmailUrl", confirmUserEmailUrl);
+
+		mail.setProps(model);
+
+		emailSenderService.sendEmail(mail, "confirm-user-email");
+
+		return ResponseEntity.ok("Đã gửi email xác nhận");
+	}
+
+
+	//Xác thực mail với token
+	@GetMapping("/confirm-user-email/{token}")
+	public ResponseEntity<?> confirmUserEmail(@PathVariable String token) {
+		try {
+			Claims claims = Jwts.parser().setSigningKey(emailConfirmSecret).parseClaimsJws(token).getBody();
+
+			// Kiểm tra subject của token có phải là subject của confirm user email
+			if (!claims.getSubject().equals(confirmUserEmailTokenSubject)) {
+				throw new BadRequestException("Invalid JWT subject");
+			}
+
+			Optional<UserCredential> userCredentialOptional = userCredentialRepository
+					.findByEmail(claims.get("email", String.class));
+
+			if (!userCredentialOptional.isPresent()) {
+				throw new NoSuchElementException("Không tìm thấy tài khoản. Vui lòng thực hiện lại sau!");
+			}
+
+			UserCredential userCredential = userCredentialOptional.get();
+
+			if (userCredential.getEmailVerified()) {
+				throw new BadRequestException("Email tài khoản đã được xác nhận trước đó");
+			}
+
+			userCredential.setEmailVerified(true);
+			userCredentialRepository.save(userCredential);
+		} catch (SignatureException e) {
+			throw new BadRequestException("Invalid JWT signature");
+		} catch (MalformedJwtException e) {
+			throw new BadRequestException("Invalid JWT token");
+		} catch (ExpiredJwtException e) {
+			Claims claims = e.getClaims();
+			if (!claims.getSubject().equals(confirmUserEmailTokenSubject)) {
+				throw new BadRequestException("Invalid JWT subject");
+			}
+
+			String email = claims.get("email", String.class);
+
+			return ResponseEntity.status(HttpStatus.GONE)
+					.body(new EmailVerifyExpiredResponse("Phiên làm việc đã hết hạn", email));
+		} catch (UnsupportedJwtException e) {
+			throw new BadRequestException("JWT token is unsupported");
+		} catch (IllegalArgumentException e) {
+			throw new BadRequestException("JWT claims string is empty");
+		}
+
+		return ResponseEntity.ok(new MessageResponse("Xác nhận email thành công"));
+	}
+
+	private String generateConfirmToken(UserCredential userCredential, String secret, String subject) {
+		Date now = new Date();
+		return Jwts.builder().setSubject(subject).claim("email", userCredential.getEmail())
+				.setExpiration(new Date((now.getTime() + mailTokenExpirationMsec)))
+				.signWith(SignatureAlgorithm.HS512, secret).compact();
+	}
+}
