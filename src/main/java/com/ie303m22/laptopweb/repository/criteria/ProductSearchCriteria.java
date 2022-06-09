@@ -1,5 +1,6 @@
 package com.ie303m22.laptopweb.repository.criteria;
 
+
 public class ProductSearchCriteria {
     private String name;
 	private String brand;
@@ -57,4 +58,5 @@ public class ProductSearchCriteria {
 	public void setCatorory(String catorory) {
 		this.catorory = catorory;
 	}
+
 }
