@@ -1,6 +1,6 @@
 package com.ie303m22.laptopweb.payload.response;
 
-import com.ie303m22.laptopweb.model.*;
+import com.ie303m22.laptopweb.models.ProductDetails;
 
 public class SmartPhoneDetailsResponse {
 	private String display;

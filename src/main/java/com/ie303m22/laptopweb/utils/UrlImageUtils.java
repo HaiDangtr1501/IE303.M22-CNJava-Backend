@@ -5,7 +5,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Component
 public class UrlImageUtils {
-    public UrlImageUtils() {
+	public UrlImageUtils() {
 		// TODO Auto-generated constructor stub
 	}
 

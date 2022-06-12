@@ -1,12 +1,12 @@
-package com.ie303m22.laptopweb.services;
+package com.ie303m22.laptopweb.repository;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.congnghejava.webbanhang.models.EHeaderImageType;
-import com.congnghejava.webbanhang.models.HeaderImage;
+import com.ie303m22.laptopweb.models.EHeaderImageType;
+import com.ie303m22.laptopweb.models.HeaderImage;
 
 @Repository
 public interface HeaderImageRepository extends JpaRepository<HeaderImage, Integer> {

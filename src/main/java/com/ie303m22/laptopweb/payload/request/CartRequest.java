@@ -3,25 +3,25 @@ package com.ie303m22.laptopweb.payload.request;
 import javax.validation.constraints.NotNull;
 
 public class CartRequest {
-    @NotNull
-    private Boolean enable;
+	@NotNull
+	private Boolean enable;
+	@NotNull
+	private int quantity;
 
-    @NotNull
-    private int quantity;
+	public int getQuantity() {
+		return quantity;
+	}
 
-    public int getQuantity() {
-        return quantity;
-    }
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
+	public Boolean getEnable() {
+		return enable;
+	}
 
-    public Boolean getEnable() {
-        return enable;
-    }
+	public void setEnable(Boolean enable) {
+		this.enable = enable;
+	}
 
-    public void setEnable(Boolean enable) {
-        this.enable = enable;
-    }
 }

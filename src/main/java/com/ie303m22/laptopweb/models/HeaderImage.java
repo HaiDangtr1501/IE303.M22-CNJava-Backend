@@ -23,7 +23,6 @@ public class HeaderImage {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name = "title")
 	private String title;
 
 	@Column(name = "file_upload_name")

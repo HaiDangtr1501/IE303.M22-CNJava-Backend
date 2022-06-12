@@ -17,10 +17,10 @@ import com.ie303m22.laptopweb.models.Mail;
 
 @Service
 public class EmailSenderService {
-    @Autowired
+	@Autowired
 	private JavaMailSender mailSender;
 
-    @Autowired
+	@Autowired
 	private SpringTemplateEngine templateEngine;
 
 	public void sendEmail(Mail mail, String templateName) throws MailException, MessagingException {
@@ -40,6 +40,6 @@ public class EmailSenderService {
 		helper.setText(html, true);
 
 		mailSender.send(message);
-    }
+	}
 
 }

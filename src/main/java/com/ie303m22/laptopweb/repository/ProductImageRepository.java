@@ -6,8 +6,9 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.ie303m22.laptopweb.model.*;
-
+import com.ie303m22.laptopweb.models.EProductImageTypeDisplay;
+import com.ie303m22.laptopweb.models.Product;
+import com.ie303m22.laptopweb.models.ProductImage;
 
 @Repository
 public interface ProductImageRepository extends JpaRepository<ProductImage, Long> {

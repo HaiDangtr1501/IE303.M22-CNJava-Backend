@@ -14,10 +14,9 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import com.ie303m22.laptopweb.models.UserCredential;
 
+public class UserPrincipal implements OAuth2User, UserDetails {
 
-
-public class UserPrincipal implements OAuth2User, UserDetails{
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
 	private static final Logger logger = LoggerFactory.getLogger(UserPrincipal.class);
 
@@ -119,4 +118,5 @@ public class UserPrincipal implements OAuth2User, UserDetails{
 		return "UserPrincipal [id=" + id + ", email=" + email + ", password=" + password + ", authorities="
 				+ authorities + ", attributes=" + attributes + "]";
 	}
+
 }

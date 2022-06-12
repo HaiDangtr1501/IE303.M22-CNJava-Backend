@@ -2,17 +2,17 @@ package com.ie303m22.laptopweb.services;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.ie303m22.laptopweb.models.Cart;
 import com.ie303m22.laptopweb.models.Product;
 import com.ie303m22.laptopweb.models.User;
 import com.ie303m22.laptopweb.repository.CartRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 @Service
 public class CartService {
-    @Autowired
+	@Autowired
 	CartRepository cartRepository;
 
 	public Cart findById(Long id) {

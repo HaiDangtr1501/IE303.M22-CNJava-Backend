@@ -6,6 +6,16 @@ import java.util.Map;
 
 import javax.mail.MessagingException;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
+import org.springframework.mail.MailException;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
 import com.ie303m22.laptopweb.exception.BadRequestException;
 import com.ie303m22.laptopweb.models.EOrderStatus;
 import com.ie303m22.laptopweb.models.EPaymentMethod;
@@ -21,19 +31,9 @@ import com.stripe.exception.StripeException;
 import com.stripe.model.Refund;
 import com.stripe.param.RefundCreateParams;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.HttpStatus;
-import org.springframework.mail.MailException;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
 @Service
 public class OrderService {
-    @Autowired
+	@Autowired
 	OrderRepository orderRepository;
 
 	@Autowired

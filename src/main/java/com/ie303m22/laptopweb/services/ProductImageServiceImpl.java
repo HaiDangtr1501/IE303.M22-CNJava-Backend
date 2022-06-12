@@ -6,8 +6,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ie303m22.laptopweb.model.*;
-import com.ie303m22.laptopweb.repository.*;
+import com.ie303m22.laptopweb.models.EProductImageTypeDisplay;
+import com.ie303m22.laptopweb.models.Product;
+import com.ie303m22.laptopweb.models.ProductImage;
+import com.ie303m22.laptopweb.repository.ProductImageRepository;
 
 @Service
 public class ProductImageServiceImpl implements ProductImageService {

@@ -19,8 +19,6 @@ import javax.persistence.Table;
 
 import com.ie303m22.laptopweb.utils.UrlImageUtils;
 
-
-
 @Entity
 @Table(name = "products")
 public class Product {

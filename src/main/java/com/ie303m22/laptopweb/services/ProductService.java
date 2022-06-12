@@ -1,16 +1,18 @@
 package com.ie303m22.laptopweb.services;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import com.ie303m22.laptopweb.payload.response.*;
-import com.ie303m22.laptopweb.model.*;
-import com.ie303m22.laptopweb.repository.*;
-import com.ie303m22.laptopweb.repository.criteria.*;
+import com.ie303m22.laptopweb.models.Product;
+import com.ie303m22.laptopweb.models.ProductPage;
+import com.ie303m22.laptopweb.models.User;
+import com.ie303m22.laptopweb.payload.response.ProductResponse;
+import com.ie303m22.laptopweb.repository.ProductCriteriaRepository;
+import com.ie303m22.laptopweb.repository.ProductRepository;
+import com.ie303m22.laptopweb.repository.criteria.ProductSearchCriteria;
 
 @Service
 public class ProductService {

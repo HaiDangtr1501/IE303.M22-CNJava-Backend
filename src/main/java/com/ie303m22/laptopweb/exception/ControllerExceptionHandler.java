@@ -6,9 +6,6 @@ import java.util.NoSuchElementException;
 
 import javax.mail.MessagingException;
 
-import com.ie303m22.laptopweb.payload.response.MessageResponse;
-import com.stripe.exception.InvalidRequestException;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
@@ -19,9 +16,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
+import com.ie303m22.laptopweb.payload.response.MessageResponse;
+import com.stripe.exception.InvalidRequestException;
+
 @RestControllerAdvice
 public class ControllerExceptionHandler {
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ResponseEntity<?> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
 		Map<String, String> errors = new HashMap<>();

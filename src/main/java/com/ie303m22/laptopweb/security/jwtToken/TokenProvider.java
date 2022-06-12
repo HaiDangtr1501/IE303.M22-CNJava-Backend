@@ -18,13 +18,14 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 
+// Thiết lập token
 @Component
 public class TokenProvider {
-    private static final Logger logger = LoggerFactory.getLogger(TokenProvider.class);
+	private static final Logger logger = LoggerFactory.getLogger(TokenProvider.class);
 
-    private AppProperties appProperties;
+	private AppProperties appProperties;
 
-    public TokenProvider(AppProperties appProperties) {
+	public TokenProvider(AppProperties appProperties) {
 		this.appProperties = appProperties;
 	}
 
@@ -46,6 +47,7 @@ public class TokenProvider {
 		// @formatter:on
 
 	}
+
 	public Long getUserIdFromToken(String token) {
 		Claims claims = Jwts.parser().setSigningKey(appProperties.getAuth().getTokenSecret()).parseClaimsJws(token)
 				.getBody();

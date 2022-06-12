@@ -1,10 +1,10 @@
 package com.ie303m22.laptopweb.security.jwtToken;
 
+import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +13,9 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint{
-    private static final Logger logger = LoggerFactory.getLogger(RestAuthenticationEntryPoint.class);
+public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
+
+	private static final Logger logger = LoggerFactory.getLogger(RestAuthenticationEntryPoint.class);
 
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
@@ -22,4 +23,5 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint{
 		logger.error("Responding with unauthorized error. Message - {}", authException.getMessage());
 		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
 	}
+
 }

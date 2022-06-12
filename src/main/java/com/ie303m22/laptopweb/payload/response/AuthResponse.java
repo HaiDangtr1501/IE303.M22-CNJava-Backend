@@ -1,7 +1,7 @@
 package com.ie303m22.laptopweb.payload.response;
 
 public class AuthResponse {
-    private String accessToken;
+	private String accessToken;
 	private String tokenType = "Bearer";
 
 	public AuthResponse(String accessToken) {
@@ -23,4 +23,5 @@ public class AuthResponse {
 	public void setTokenType(String tokenType) {
 		this.tokenType = tokenType;
 	}
+
 }

@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import com.ie303m22.laptopweb.model.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.ie303m22.laptopweb.models.EProductCategory;
+import com.ie303m22.laptopweb.models.Product;
+import com.ie303m22.laptopweb.models.Review;
 
 @JsonInclude(Include.NON_NULL)
 public class ProductResponse {

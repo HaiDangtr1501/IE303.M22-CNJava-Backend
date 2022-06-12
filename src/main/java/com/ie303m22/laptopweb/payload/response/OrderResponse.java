@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import com.ie303m22.laptopweb.models.Order;
 
 public class OrderResponse {
-    private String id;
+	private String id;
 	private String createdDate;
 	private String updatedDate;
 	private String status;
@@ -90,4 +90,5 @@ public class OrderResponse {
 	public void setUserInfo(HashMap<String, Object> userInfo) {
 		this.userInfo = userInfo;
 	}
+
 }

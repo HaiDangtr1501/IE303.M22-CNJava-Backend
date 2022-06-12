@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.6.7</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<version>2.4.4</version>
+		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.ie303m22</groupId>
-	<artifactId>laptop-web</artifactId>
+	<groupId>com.congnghejava</groupId>
+	<artifactId>web-ban-hang</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>laptop-web</name>
-	<description>Project laptop web e-commerce for Spring Boot</description>
+	<name>web-ban-hang</name>
+	<description>Demo project for Spring Boot</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -77,15 +78,15 @@
 	      <artifactId>passay</artifactId>
 	      <version>1.6.0</version>
 	  	</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.h2database</groupId>
 		    <artifactId>h2</artifactId>
 		    <scope>runtime</scope>
-		</dependency>
+		</dependency> -->
 		<dependency>
 		  <groupId>com.stripe</groupId>
 		  <artifactId>stripe-java</artifactId>
-		  <version>20.126.0</version>
+		  <version>20.52.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
@@ -103,7 +104,6 @@
 			<groupId>org.thymeleaf</groupId>
 			<artifactId>thymeleaf-spring5</artifactId>
 		</dependency>
-
 	</dependencies>
 
 	<build>

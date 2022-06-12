@@ -1,7 +1,7 @@
 package com.ie303m22.laptopweb.exception;
 
 public class ErrorMessage {
-    private int status;
+	private int status;
 	private String message;
 
 	public ErrorMessage(int status, String message) {
@@ -24,4 +24,5 @@ public class ErrorMessage {
 	public void setStatus(int status) {
 		this.status = status;
 	}
+
 }

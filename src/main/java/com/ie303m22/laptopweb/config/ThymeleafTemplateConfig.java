@@ -10,7 +10,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 
 @Configuration
 public class ThymeleafTemplateConfig {
-    @Bean
+	@Bean
 	public SpringTemplateEngine springTemplateEngine() {
 		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
 		templateEngine.addTemplateResolver(htmlTemplateResolver());

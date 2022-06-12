@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ie303m22.laptopweb.model.*;
-import com.ie303m22.laptopweb.repository.*;
+import com.ie303m22.laptopweb.models.Brand;
+import com.ie303m22.laptopweb.repository.BrandRepository;
 
 @Service
 public class BrandServiceImpl implements BrandService {

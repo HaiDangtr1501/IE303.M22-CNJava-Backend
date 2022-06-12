@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ie303m22.laptopweb.model.*;
-import com.ie303m22.laptopweb.repository.*;
+import com.ie303m22.laptopweb.models.Category;
+import com.ie303m22.laptopweb.repository.CategoryRepository;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {

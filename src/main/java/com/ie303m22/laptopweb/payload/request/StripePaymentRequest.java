@@ -1,7 +1,7 @@
 package com.ie303m22.laptopweb.payload.request;
 
 public class StripePaymentRequest {
-    private String name;
+	private String name;
 	private String currency;
 	private String successUrl;
 	private String cancelUrl;
@@ -55,4 +55,5 @@ public class StripePaymentRequest {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+
 }

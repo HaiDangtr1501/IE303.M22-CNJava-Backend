@@ -3,8 +3,13 @@ package com.ie303m22.laptopweb.config;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
+@Component
+@ConfigurationProperties(prefix = "app")
 public class AppProperties {
-    private final Auth auth = new Auth();
+	private final Auth auth = new Auth();
 	private final OAuth2 oauth2 = new OAuth2();
 	private final Stripe stripe = new Stripe();
 

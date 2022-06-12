@@ -111,7 +111,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.failureHandler(oAuth2AuthenticationFailureHandler);
 		// @formatter:on
 
-		// http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+		http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 
 }

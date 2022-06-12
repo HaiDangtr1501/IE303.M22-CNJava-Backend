@@ -1,20 +1,20 @@
 package com.ie303m22.laptopweb.repository.criteria;
 
 public class OrderSearchCriteria {
-    private String id;
-    private String username;
-    private String status;
+	private String id;
+	private String username;
+	private String status;
 
-    public OrderSearchCriteria() {
-    }
+	public OrderSearchCriteria() {
+	}
 
-    public OrderSearchCriteria(String id, String username, String status) {
-        this.id = id;
-        this.username = username;
-        this.status = status;
-    }
+	public OrderSearchCriteria(String id, String username, String status) {
+		this.id = id;
+		this.username = username;
+		this.status = status;
+	}
 
-    public String getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -25,4 +25,5 @@ public class OrderSearchCriteria {
 	public String getStatus() {
 		return status;
 	}
+
 }

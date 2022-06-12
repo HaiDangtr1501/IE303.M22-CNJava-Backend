@@ -2,8 +2,8 @@ package com.ie303m22.laptopweb.payload.response;
 
 import java.text.SimpleDateFormat;
 
-import com.congnghejava.webbanhang.models.HeaderImage;
-import com.congnghejava.webbanhang.utils.UrlImageUtils;
+import com.ie303m22.laptopweb.models.HeaderImage;
+import com.ie303m22.laptopweb.utils.UrlImageUtils;
 
 public class HeaderImageResponse {
 	UrlImageUtils urlImageUtils = new UrlImageUtils();

@@ -6,24 +6,6 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.mail.MessagingException;
 
-import com.ie303m22.laptopweb.config.AppProperties;
-import com.ie303m22.laptopweb.exception.BadRequestException;
-import com.ie303m22.laptopweb.models.Cart;
-import com.ie303m22.laptopweb.models.ERole;
-import com.ie303m22.laptopweb.models.Order;
-import com.ie303m22.laptopweb.models.User;
-import com.ie303m22.laptopweb.payload.response.MessageResponse;
-import com.ie303m22.laptopweb.payload.response.OrderItemResponse;
-import com.ie303m22.laptopweb.payload.response.OrderResponse;
-import com.ie303m22.laptopweb.payload.response.UpdateOrderResponse;
-import com.ie303m22.laptopweb.repository.criteria.OrderSearchCriteria;
-import com.ie303m22.laptopweb.security.CurrentUser;
-import com.ie303m22.laptopweb.security.UserPrincipal;
-import com.ie303m22.laptopweb.services.CartService;
-import com.ie303m22.laptopweb.services.OrderService;
-import com.stripe.Stripe;
-import com.stripe.exception.StripeException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -44,10 +26,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ie303m22.laptopweb.config.AppProperties;
+import com.ie303m22.laptopweb.exception.BadRequestException;
+import com.ie303m22.laptopweb.models.Cart;
+import com.ie303m22.laptopweb.models.ERole;
+import com.ie303m22.laptopweb.models.Order;
+import com.ie303m22.laptopweb.models.User;
+import com.ie303m22.laptopweb.payload.response.MessageResponse;
+import com.ie303m22.laptopweb.payload.response.OrderItemResponse;
+import com.ie303m22.laptopweb.payload.response.OrderResponse;
+import com.ie303m22.laptopweb.payload.response.UpdateOrderResponse;
+import com.ie303m22.laptopweb.repository.criteria.OrderSearchCriteria;
+import com.ie303m22.laptopweb.security.CurrentUser;
+import com.ie303m22.laptopweb.security.UserPrincipal;
+import com.ie303m22.laptopweb.services.CartService;
+import com.ie303m22.laptopweb.services.OrderService;
+import com.ie303m22.laptopweb.services.UserService;
+import com.stripe.Stripe;
+import com.stripe.exception.StripeException;
+
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
-    @Autowired
+
+	@Autowired
 	UserService userService;
 
 	@Autowired

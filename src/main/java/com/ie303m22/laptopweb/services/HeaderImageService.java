@@ -6,9 +6,9 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.congnghejava.webbanhang.models.EHeaderImageType;
-import com.congnghejava.webbanhang.models.HeaderImage;
-import com.congnghejava.webbanhang.repository.HeaderImageRepository;
+import com.ie303m22.laptopweb.models.EHeaderImageType;
+import com.ie303m22.laptopweb.models.HeaderImage;
+import com.ie303m22.laptopweb.repository.HeaderImageRepository;
 
 @Service
 public class HeaderImageService {

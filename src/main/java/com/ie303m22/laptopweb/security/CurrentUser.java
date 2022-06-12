@@ -13,5 +13,5 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 @Documented
 @AuthenticationPrincipal
 public @interface CurrentUser {
-    
+
 }

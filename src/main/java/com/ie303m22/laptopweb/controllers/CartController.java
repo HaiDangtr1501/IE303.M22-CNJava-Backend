@@ -3,16 +3,6 @@ package com.ie303m22.laptopweb.controllers;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.ie303m22.laptopweb.models.Cart;
-import com.ie303m22.laptopweb.models.Product;
-import com.ie303m22.laptopweb.models.User;
-import com.ie303m22.laptopweb.payload.request.CartRequest;
-import com.ie303m22.laptopweb.payload.response.CartResponse;
-import com.ie303m22.laptopweb.payload.response.MessageResponse;
-import com.ie303m22.laptopweb.security.CurrentUser;
-import com.ie303m22.laptopweb.security.UserPrincipal;
-import com.ie303m22.laptopweb.services.CartService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +16,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ie303m22.laptopweb.models.Cart;
+import com.ie303m22.laptopweb.models.Product;
+import com.ie303m22.laptopweb.models.User;
+import com.ie303m22.laptopweb.payload.request.CartRequest;
+import com.ie303m22.laptopweb.payload.response.CartResponse;
+import com.ie303m22.laptopweb.payload.response.MessageResponse;
+import com.ie303m22.laptopweb.security.CurrentUser;
+import com.ie303m22.laptopweb.security.UserPrincipal;
+import com.ie303m22.laptopweb.services.CartService;
+import com.ie303m22.laptopweb.services.ProductService;
+import com.ie303m22.laptopweb.services.UserService;
+
 @RestController
 @RequestMapping("/cart")
 public class CartController {
-    @Autowired
+	@Autowired
 	UserService userService;
 
 	@Autowired
@@ -61,7 +63,7 @@ public class CartController {
 
 		if (cartService.existsByProductAndUser(product, user)) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body(new MessageResponse("Sản phẩm đã có trong giỏ hàng"));
+					.body(new MessageResponse("Đã thêm vào giỏ hàng"));
 		}
 
 		product.setQuantity(product.getQuantity() - 1);

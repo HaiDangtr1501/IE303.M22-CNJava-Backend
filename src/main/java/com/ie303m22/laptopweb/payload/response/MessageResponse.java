@@ -1,7 +1,7 @@
 package com.ie303m22.laptopweb.payload.response;
 
 public class MessageResponse {
-    private String message;
+	private String message;
 
 	public MessageResponse(String message) {
 		this.message = message;

@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-WebBanHangApplication<web-ban-hang>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.congnghejava.webbanhang.WebBanHangApplication",
+            "projectName": "web-ban-hang",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

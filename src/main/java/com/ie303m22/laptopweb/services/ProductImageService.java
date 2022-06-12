@@ -1,10 +1,11 @@
 package com.ie303m22.laptopweb.services;
 
-
 import java.util.List;
 import java.util.Optional;
 
-import com.ie303m22.laptopweb.model.*;
+import com.ie303m22.laptopweb.models.EProductImageTypeDisplay;
+import com.ie303m22.laptopweb.models.Product;
+import com.ie303m22.laptopweb.models.ProductImage;
 
 public interface ProductImageService {
 

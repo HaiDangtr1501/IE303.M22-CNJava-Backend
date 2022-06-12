@@ -4,7 +4,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 public class LoginRequest {
-    @Email
+	@Email
 	@NotBlank
 	private String email;
 
@@ -26,4 +26,5 @@ public class LoginRequest {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 }

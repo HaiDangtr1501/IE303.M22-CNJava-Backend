@@ -3,7 +3,7 @@ package com.ie303m22.laptopweb.payload.response;
 import com.ie303m22.laptopweb.models.OrderItem;
 
 public class OrderItemResponse {
-    private long productId;
+	private long productId;
 	private String productName;
 	private int price;
 	private int discount;
@@ -69,4 +69,5 @@ public class OrderItemResponse {
 	public void setDiscount(int discount) {
 		this.discount = discount;
 	}
+
 }

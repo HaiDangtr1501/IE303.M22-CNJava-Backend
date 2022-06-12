@@ -6,10 +6,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.congnghejava.webbanhang.models.Product;
-import com.congnghejava.webbanhang.models.Review;
-import com.congnghejava.webbanhang.models.User;
-import com.congnghejava.webbanhang.repository.ReviewRepository;
+import com.ie303m22.laptopweb.models.Product;
+import com.ie303m22.laptopweb.models.Review;
+import com.ie303m22.laptopweb.models.User;
+import com.ie303m22.laptopweb.repository.ReviewRepository;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {

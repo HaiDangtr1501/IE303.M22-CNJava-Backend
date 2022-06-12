@@ -18,14 +18,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ie303m22.laptopweb.payload.response.*;
-import com.ie303m22.laptopweb.payload.request.*;
-import com.ie303m22.laptopweb.model.*;
-import com.ie303m22.laptopweb.repository.*;
-import com.ie303m22.laptopweb.repository.criteria.*;
-import com.ie303m22.laptopweb.services.*;
-
-
+import com.ie303m22.laptopweb.models.Brand;
+import com.ie303m22.laptopweb.models.EProductBrand;
+import com.ie303m22.laptopweb.payload.request.BrandRequest;
+import com.ie303m22.laptopweb.payload.response.BrandResponse;
+import com.ie303m22.laptopweb.payload.response.MessageResponse;
+import com.ie303m22.laptopweb.services.BrandServiceImpl;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController

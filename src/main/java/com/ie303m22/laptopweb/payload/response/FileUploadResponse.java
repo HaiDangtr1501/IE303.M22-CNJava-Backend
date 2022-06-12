@@ -1,7 +1,7 @@
 package com.ie303m22.laptopweb.payload.response;
 
 public class FileUploadResponse {
-    private String name;
+	private String name;
 	private String url;
 
 	public FileUploadResponse(String name, String url) {
@@ -24,4 +24,5 @@ public class FileUploadResponse {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+
 }

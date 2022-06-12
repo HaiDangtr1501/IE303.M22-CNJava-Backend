@@ -20,10 +20,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ie303m22.laptopweb.payload.response.*;
-import com.ie303m22.laptopweb.payload.request.*;
-import com.ie303m22.laptopweb.model.*;
-import com.ie303m22.laptopweb.services.*;
+import com.ie303m22.laptopweb.models.Category;
+import com.ie303m22.laptopweb.models.EProductCategory;
+import com.ie303m22.laptopweb.payload.request.CategoryRequest;
+import com.ie303m22.laptopweb.payload.response.CategoryResponse;
+import com.ie303m22.laptopweb.payload.response.MessageResponse;
+import com.ie303m22.laptopweb.services.CategoryServiceImpl;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController

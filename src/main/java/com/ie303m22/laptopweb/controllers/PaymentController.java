@@ -7,6 +7,14 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.google.gson.JsonSyntaxException;
 import com.ie303m22.laptopweb.exception.BadRequestException;
 import com.ie303m22.laptopweb.models.Cart;
@@ -19,6 +27,7 @@ import com.ie303m22.laptopweb.security.CurrentUser;
 import com.ie303m22.laptopweb.security.UserPrincipal;
 import com.ie303m22.laptopweb.services.CartService;
 import com.ie303m22.laptopweb.services.OrderService;
+import com.ie303m22.laptopweb.services.UserService;
 import com.stripe.Stripe;
 import com.stripe.exception.SignatureVerificationException;
 import com.stripe.exception.StripeException;
@@ -29,18 +38,10 @@ import com.stripe.net.Webhook;
 import com.stripe.param.checkout.SessionCreateParams;
 import com.stripe.param.checkout.SessionCreateParams.LineItem;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 @RestController
 @RequestMapping("/payment")
 public class PaymentController {
-    @Autowired
+	@Autowired
 	UserService userService;
 
 	@Autowired
@@ -154,4 +155,5 @@ public class PaymentController {
 		Double priceWithDiscount = Double.valueOf(product.getPrice() * (1 - product.getDiscount() / 100));
 		return Math.round(priceWithDiscount / 10000) * 10000;
 	}
+
 }

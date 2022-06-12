@@ -1,13 +1,13 @@
-package com.ie303m22.laptopweb.services;
+package com.ie303m22.laptopweb.repository;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.congnghejava.webbanhang.models.Product;
-import com.congnghejava.webbanhang.models.Review;
-import com.congnghejava.webbanhang.models.User;
+import com.ie303m22.laptopweb.models.Product;
+import com.ie303m22.laptopweb.models.Review;
+import com.ie303m22.laptopweb.models.User;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {

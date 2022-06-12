@@ -2,9 +2,9 @@ package com.ie303m22.laptopweb.services;
 
 import java.util.List;
 
-import com.congnghejava.webbanhang.models.Product;
-import com.congnghejava.webbanhang.models.Review;
-import com.congnghejava.webbanhang.models.User;
+import com.ie303m22.laptopweb.models.Product;
+import com.ie303m22.laptopweb.models.Review;
+import com.ie303m22.laptopweb.models.User;
 
 public interface ReviewService extends IGeneralService<Review> {
 

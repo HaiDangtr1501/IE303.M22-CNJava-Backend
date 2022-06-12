@@ -1,6 +1,6 @@
 package com.ie303m22.laptopweb.payload.response;
 
-import com.ie303m22.laptopweb.model.*;
+import com.ie303m22.laptopweb.models.ProductImage;
 import com.ie303m22.laptopweb.utils.UrlImageUtils;
 
 public class ProductImageResponse {

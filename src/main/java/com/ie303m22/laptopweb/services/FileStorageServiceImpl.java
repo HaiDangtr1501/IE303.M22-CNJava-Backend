@@ -14,10 +14,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ie303m22.laptopweb.models.EProductImageTypeDisplay;
+import com.ie303m22.laptopweb.models.Product;
+
 @Service
-public class FileStorageServiceImpl implements FilesStorageService{
-    // @Autowired
-	// ProductImageServiceImpl productImageService;
+public class FileStorageServiceImpl implements FilesStorageService {
+
+	@Autowired
+	ProductImageServiceImpl productImageService;
 
 	private final Path root = Paths.get("uploads");
 
@@ -84,11 +88,9 @@ public class FileStorageServiceImpl implements FilesStorageService{
 		}
 	}
 
-	// @Override
-	// public void saveImageForProduct(MultipartFile file, Product product, EProductImageTypeDisplay type) {
-	// 	String fileName = save(file);
-	// 	productImageService.save(product, fileName, type);
-	// }
-
+	@Override
+	public void saveImageForProduct(MultipartFile file, Product product, EProductImageTypeDisplay type) {
+		String fileName = save(file);
+		productImageService.save(product, fileName, type);
+	}
 }
-

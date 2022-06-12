@@ -2,14 +2,16 @@ package com.ie303m22.laptopweb.payload.response;
 
 import java.util.Optional;
 
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import com.ie303m22.laptopweb.models.Cart;
 import com.ie303m22.laptopweb.models.EProductImageTypeDisplay;
 import com.ie303m22.laptopweb.models.ProductImage;
-
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import com.ie303m22.laptopweb.models.Product;
 
 public class CartResponse {
-    private Long cartId;
+
+	private Long cartId;
 
 	private Boolean enable;
 
@@ -18,6 +20,8 @@ public class CartResponse {
 	private String productName;
 
 	private int quantity;
+	
+	private int stock;
 
 	private int productPrice;
 
@@ -27,6 +31,8 @@ public class CartResponse {
 		Optional<ProductImage> productImageOfficial = cart.getProduct().getImages().stream()
 				.filter(image -> image.getType() == EProductImageTypeDisplay.Official).findAny();
 
+		
+		
 		if (productImageOfficial.isPresent()) {
 			this.productImageUrl = ServletUriComponentsBuilder.fromCurrentContextPath().path("/files/")
 					.path(productImageOfficial.get().getName()).toUriString();
@@ -37,12 +43,19 @@ public class CartResponse {
 		this.quantity = cart.getQuantity();
 		this.productPrice = cart.getProduct().getPrice();
 		this.productDiscount = cart.getProduct().getDiscount();
+		this.stock = cart.getProduct().getQuantity();
 		this.enable = cart.getEnable();
 	}
-
+	public int getStock() {
+		return stock;
+	}
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
 	public Long getCartId() {
 		return cartId;
 	}
+	
 
 	public void setCartId(Long cartId) {
 		this.cartId = cartId;
@@ -95,4 +108,5 @@ public class CartResponse {
 	public void setEnable(Boolean enable) {
 		this.enable = enable;
 	}
+
 }

@@ -1,7 +1,7 @@
 package com.ie303m22.laptopweb.payload.response;
 
 public class EmailVerifyExpiredResponse {
-    private String message;
+	private String message;
 	private String email;
 
 	public EmailVerifyExpiredResponse(String message, String email) {
@@ -24,4 +24,5 @@ public class EmailVerifyExpiredResponse {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 }

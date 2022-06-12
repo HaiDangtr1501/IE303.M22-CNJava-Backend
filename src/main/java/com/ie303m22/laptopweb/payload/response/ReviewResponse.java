@@ -2,7 +2,7 @@ package com.ie303m22.laptopweb.payload.response;
 
 import java.text.SimpleDateFormat;
 
-import com.congnghejava.webbanhang.models.Review;
+import com.ie303m22.laptopweb.models.Review;
 
 public class ReviewResponse {
 	private long id;

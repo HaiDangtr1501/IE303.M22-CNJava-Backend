@@ -20,7 +20,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
-import com.ie303m22.laptopweb.model.*;
+import com.ie303m22.laptopweb.models.Product;
+import com.ie303m22.laptopweb.models.ProductPage;
 import com.ie303m22.laptopweb.payload.response.ProductResponse;
 import com.ie303m22.laptopweb.repository.criteria.ProductSearchCriteria;
 

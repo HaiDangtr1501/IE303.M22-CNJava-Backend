@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import com.ie303m22.laptopweb.payload.response.FileUploadResponse;
@@ -31,7 +30,7 @@ import com.ie303m22.laptopweb.services.FilesStorageService;
 @RestController
 @RequestMapping("/files")
 public class FilesUploadController {
-    @Autowired
+	@Autowired
 	FilesStorageService fileStorageService;
 
 	private static final Logger logger = LoggerFactory.getLogger(FilesUploadController.class);
@@ -46,8 +45,8 @@ public class FilesUploadController {
 				fileStorageService.save(file);
 				filenames.add(file.getOriginalFilename());
 			});
-
 			String message = "Uploaded the file successfully: " + filenames;
+
 			return new ResponseEntity<>(new MessageResponse(message), HttpStatus.OK);
 		} catch (Exception e) {
 			String message = "Could not upload the file!";

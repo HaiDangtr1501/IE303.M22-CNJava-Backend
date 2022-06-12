@@ -9,6 +9,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -31,12 +32,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ie303m22.laptopweb.exception.BadRequestException;
+import com.ie303m22.laptopweb.exception.TokenExpiredException;
 import com.ie303m22.laptopweb.models.AuthProvider;
 import com.ie303m22.laptopweb.models.ERole;
 import com.ie303m22.laptopweb.models.Mail;
 import com.ie303m22.laptopweb.models.Role;
 import com.ie303m22.laptopweb.models.UserCredential;
+import com.ie303m22.laptopweb.payload.request.EmailResetPasswordRequest;
 import com.ie303m22.laptopweb.payload.request.LoginRequest;
+import com.ie303m22.laptopweb.payload.request.ResetPasswordRequest;
 import com.ie303m22.laptopweb.payload.request.SignupRequest;
 import com.ie303m22.laptopweb.payload.response.AuthResponse;
 import com.ie303m22.laptopweb.payload.response.EmailVerifyExpiredResponse;
@@ -58,7 +62,7 @@ import io.jsonwebtoken.UnsupportedJwtException;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-    UrlImageUtils urlImageUtils = new UrlImageUtils();
+	UrlImageUtils urlImageUtils = new UrlImageUtils();
 
 	private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
@@ -69,7 +73,7 @@ public class AuthController {
 	UserCredentialRepository userCredentialRepository; //Kiểm tra email trong csdl
 
 	@Autowired
-	RoleRepository RoleRepository; //Mặc định người dùng đăng ký tài khoản mới với role là ROLE_USER
+	RoleRepository RoleRepository;
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -109,6 +113,7 @@ public class AuthController {
 
 		return ResponseEntity.ok(new AuthResponse(token));
 	}
+
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest)
 			throws MailException, MessagingException {
@@ -139,10 +144,9 @@ public class AuthController {
 
 		sendMailConfirm(signupRequest.getEmail());
 
-		return ResponseEntity.ok(new MessageResponse("Đăng ký thành công, truy cập email để xác nhận tài khoản"));
+		return ResponseEntity.ok(new MessageResponse("Đăng ký thành công, truy cập vào "+user.getEmail()+" để xác nhận tài khoản"));
 	}
 
-	//Gửi mail khi đăng ký thành công
 	@PostMapping("/confirm-user-email")
 	public ResponseEntity<?> sendMailConfirm(@RequestBody String email) throws MailException, MessagingException {
 
@@ -175,8 +179,6 @@ public class AuthController {
 		return ResponseEntity.ok("Đã gửi email xác nhận");
 	}
 
-
-	//Xác thực mail với token
 	@GetMapping("/confirm-user-email/{token}")
 	public ResponseEntity<?> confirmUserEmail(@PathVariable String token) {
 		try {
@@ -223,6 +225,81 @@ public class AuthController {
 		}
 
 		return ResponseEntity.ok(new MessageResponse("Xác nhận email thành công"));
+	}
+
+	@PostMapping("/reset-password")
+	public ResponseEntity<?> sendMailResetPassword(@RequestBody EmailResetPasswordRequest emailResetPasswordRequest,
+			HttpServletRequest request) throws MailException, MessagingException {
+
+		String resetEmail = emailResetPasswordRequest.getEmail();
+
+		Optional<UserCredential> userCredential = userCredentialRepository.findByEmail(resetEmail);
+		if (!userCredential.isPresent()) {
+			throw new BadRequestException("Không có tài khoản với email " + resetEmail);
+		}
+
+		String token = generateConfirmToken(userCredential.get(), resetPasswordSecret, resetPasswordTokenSubject);
+		String resetPasswordUrl = "http://localhost:3000/reset-password/" + token;
+
+		Mail mail = new Mail();
+
+		mail.setFrom(adminEmail);
+		mail.setTo(resetEmail);
+		mail.setSubject("Đổi mật khẩu Shop Công nghệ Java");
+
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("resetPasswordUrl", resetPasswordUrl);
+
+		mail.setProps(model);
+
+		emailSenderService.sendEmail(mail, "reset-password");
+
+		return ResponseEntity
+				.ok(new MessageResponse("Truy cập email " + resetEmail + " để có đường dẫn thay đổi mật khẩu"));
+	}
+
+	@PostMapping("/reset-password/{token}")
+	public ResponseEntity<?> resetPassword(@PathVariable String token,
+			@RequestBody ResetPasswordRequest resetPasswordRequest) {
+		String password = resetPasswordRequest.getPassword();
+		String passwordConfirm = resetPasswordRequest.getPasswordConfirm();
+
+		if (!password.equals(passwordConfirm)) {
+			throw new BadRequestException("Mật khẩu xác nhận không chính xác");
+		}
+
+		try {
+			Claims claims = Jwts.parser().setSigningKey(resetPasswordSecret).parseClaimsJws(token).getBody();
+			logger.info("claims:" , claims);
+			// Kiểm tra subject của token có phải là subject của reset-password
+			if (!claims.getSubject().equals(resetPasswordTokenSubject)) {
+				throw new BadRequestException("Invalid JWT subject");
+			}
+
+			Optional<UserCredential> userCredentialOptional = userCredentialRepository
+					.findByEmail(claims.get("email", String.class));
+
+			if (!userCredentialOptional.isPresent()) {
+				throw new NoSuchElementException("Không tìm thấy tài khoản. Vui lòng thực hiện lại sau!");
+			}
+
+			UserCredential userCredential = userCredentialOptional.get();
+			userCredential.setPassword(passwordEncoder.encode(password));
+			logger.info("new password: ", userCredential.getPassword());
+			userCredentialRepository.save(userCredential);
+		} catch (SignatureException e) {
+			throw new BadRequestException("Invalid JWT signature");
+		} catch (MalformedJwtException e) {
+			throw new BadRequestException("Invalid JWT token");
+		} catch (ExpiredJwtException e) {
+			throw new TokenExpiredException("Phiên làm việc đã hết hạn, vui lòng gửi lại mail mới");
+		} catch (UnsupportedJwtException e) {
+			throw new BadRequestException("JWT token is unsupported");
+		} catch (IllegalArgumentException e) {
+			throw new BadRequestException("JWT claims string is empty");
+		}
+
+		return ResponseEntity.ok(new MessageResponse("Thay đổi mật khẩu thành công"));
 	}
 
 	private String generateConfirmToken(UserCredential userCredential, String secret, String subject) {

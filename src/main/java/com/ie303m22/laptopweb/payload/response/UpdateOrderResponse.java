@@ -3,7 +3,7 @@ package com.ie303m22.laptopweb.payload.response;
 import com.ie303m22.laptopweb.models.EOrderStatus;
 
 public class UpdateOrderResponse {
-    private String orderStatus;
+	private String orderStatus;
 
 	public UpdateOrderResponse(EOrderStatus status) {
 		orderStatus = status.toString();
@@ -16,4 +16,5 @@ public class UpdateOrderResponse {
 	public void setOrderStatus(String orderStatus) {
 		this.orderStatus = orderStatus;
 	}
+
 }

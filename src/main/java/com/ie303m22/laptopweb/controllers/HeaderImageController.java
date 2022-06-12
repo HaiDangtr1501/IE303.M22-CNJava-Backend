@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.congnghejava.webbanhang.exception.BadRequestException;
-import com.congnghejava.webbanhang.models.EHeaderImageType;
-import com.congnghejava.webbanhang.models.HeaderImage;
-import com.congnghejava.webbanhang.payload.request.HeaderImageRequest;
-import com.congnghejava.webbanhang.payload.response.HeaderImageResponse;
-import com.congnghejava.webbanhang.payload.response.MessageResponse;
-import com.congnghejava.webbanhang.services.FileStorageServiceImpl;
-import com.congnghejava.webbanhang.services.HeaderImageService;
+import com.ie303m22.laptopweb.exception.BadRequestException;
+import com.ie303m22.laptopweb.models.EHeaderImageType;
+import com.ie303m22.laptopweb.models.HeaderImage;
+import com.ie303m22.laptopweb.payload.request.HeaderImageRequest;
+import com.ie303m22.laptopweb.payload.response.HeaderImageResponse;
+import com.ie303m22.laptopweb.payload.response.MessageResponse;
+import com.ie303m22.laptopweb.services.FileStorageServiceImpl;
+import com.ie303m22.laptopweb.services.HeaderImageService;
 
 @RestController
 @RequestMapping("/header-images")

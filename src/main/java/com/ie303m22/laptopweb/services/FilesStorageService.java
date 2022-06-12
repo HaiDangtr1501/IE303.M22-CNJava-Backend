@@ -9,10 +9,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ie303m22.laptopweb.models.EProductImageTypeDisplay;
 import com.ie303m22.laptopweb.models.Product;
 
-
-
 public interface FilesStorageService {
-    public void init();
+	public void init();
 
 	public Resource load(String filename);
 
@@ -24,7 +22,5 @@ public interface FilesStorageService {
 
 	public String save(MultipartFile file);
 
-	// public void saveImageForProduct(MultipartFile file, Product product, EProductImageTypeDisplay type);
-
+	public void saveImageForProduct(MultipartFile file, Product product, EProductImageTypeDisplay type);
 }
-
