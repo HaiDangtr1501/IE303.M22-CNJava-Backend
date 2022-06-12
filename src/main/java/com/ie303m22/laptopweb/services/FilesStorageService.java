@@ -25,4 +25,6 @@ public interface FilesStorageService {
 	public String save(MultipartFile file);
 
 	// public void saveImageForProduct(MultipartFile file, Product product, EProductImageTypeDisplay type);
+
 }
+
