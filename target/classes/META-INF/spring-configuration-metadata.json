@@ -1,0 +1,55 @@
+{
+  "groups": [
+    {
+      "name": "app",
+      "type": "com.ie303m22.laptopweb.config.AppProperties",
+      "sourceType": "com.ie303m22.laptopweb.config.AppProperties"
+    },
+    {
+      "name": "app.auth",
+      "type": "com.ie303m22.laptopweb.config.AppProperties$Auth",
+      "sourceType": "com.ie303m22.laptopweb.config.AppProperties",
+      "sourceMethod": "public com.ie303m22.laptopweb.config.AppProperties.Auth getAuth() "
+    },
+    {
+      "name": "app.o-auth2",
+      "type": "com.ie303m22.laptopweb.config.AppProperties$OAuth2",
+      "sourceType": "com.ie303m22.laptopweb.config.AppProperties",
+      "sourceMethod": "public com.ie303m22.laptopweb.config.AppProperties.OAuth2 getOAuth2() "
+    },
+    {
+      "name": "app.stripe",
+      "type": "com.ie303m22.laptopweb.config.AppProperties$Stripe",
+      "sourceType": "com.ie303m22.laptopweb.config.AppProperties",
+      "sourceMethod": "public com.ie303m22.laptopweb.config.AppProperties.Stripe getStripe() "
+    }
+  ],
+  "properties": [
+    {
+      "name": "app.auth.token-expiration-msec",
+      "type": "java.lang.Long",
+      "sourceType": "com.ie303m22.laptopweb.config.AppProperties$Auth"
+    },
+    {
+      "name": "app.auth.token-secret",
+      "type": "java.lang.String",
+      "sourceType": "com.ie303m22.laptopweb.config.AppProperties$Auth"
+    },
+    {
+      "name": "app.o-auth2.authorized-redirect-uris",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "com.ie303m22.laptopweb.config.AppProperties$OAuth2"
+    },
+    {
+      "name": "app.stripe.endpoint-secret",
+      "type": "java.lang.String",
+      "sourceType": "com.ie303m22.laptopweb.config.AppProperties$Stripe"
+    },
+    {
+      "name": "app.stripe.token-secret",
+      "type": "java.lang.String",
+      "sourceType": "com.ie303m22.laptopweb.config.AppProperties$Stripe"
+    }
+  ],
+  "hints": []
+}

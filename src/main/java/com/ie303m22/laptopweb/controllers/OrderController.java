@@ -152,7 +152,7 @@ public class OrderController {
 
 		orderService.sendOrderStatusMail(order);
 
-		return ResponseEntity.status(HttpStatus.OK).body("Order " + order.getId() + " updated to status: Returned");
+		return ResponseEntity.status(HttpStatus.OK).body("Đơn hàng " + order.getId() + " đã thay đổi trạng thái: Hoàn trả");
 	}
 
 	@PostConstruct
@@ -185,7 +185,7 @@ public class OrderController {
 	public ResponseEntity<?> deleteOrder(@PathVariable String id) {
 		Order order = orderService.findById(id);
 		orderService.remove(order);
-		return ResponseEntity.status(HttpStatus.OK).body("Order " + order.getId() + " has already been deleted");
+		return ResponseEntity.status(HttpStatus.OK).body("Đơn hàng " + order.getId() + " vừa được xoá");
 	}
 
 	@ExceptionHandler(BadRequestException.class)

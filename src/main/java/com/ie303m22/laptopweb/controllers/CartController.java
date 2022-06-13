@@ -110,7 +110,7 @@ public class CartController {
 		cartService.save(cart);
 		productService.save(product);
 
-		return ResponseEntity.status(HttpStatus.OK).body("Cart item updated");
+		return ResponseEntity.status(HttpStatus.OK).body("Sản phẩm trong giỏ đã được cập nhật");
 	}
 
 	@DeleteMapping("/{cartId}")

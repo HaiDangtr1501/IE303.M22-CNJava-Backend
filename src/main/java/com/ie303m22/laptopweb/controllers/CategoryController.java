@@ -54,13 +54,13 @@ public class CategoryController {
 		EProductCategory categoryName = EProductCategory.valueOf(categoryRequest.getName());
 
 		if (categoryService.existsCategoryName(categoryName.toString())) {
-			return ResponseEntity.badRequest().body(new MessageResponse("That category already exists"));
+			return ResponseEntity.badRequest().body(new MessageResponse("Thể loại này đã tồn tại"));
 		}
 
 		Category category = new Category(EProductCategory.valueOf(categoryRequest.getName()));
 		categoryService.save(category);
 
-		return new ResponseEntity<>(new MessageResponse("Add category '" + category.getName() + "' successfully!"),
+		return new ResponseEntity<>(new MessageResponse("Thêm thể loại '" + category.getName() + "' thành công!"),
 				HttpStatus.OK);
 	}
 
@@ -74,7 +74,7 @@ public class CategoryController {
 		EProductCategory categoryName = EProductCategory.valueOf(categoryRequest.getName());
 
 		if (categoryService.existsCategoryName(categoryName.toString())) {
-			return ResponseEntity.badRequest().body(new MessageResponse("That category already exists"));
+			return ResponseEntity.badRequest().body(new MessageResponse("Thể loại này đã tồn tại"));
 		}
 
 		Optional<Category> categoryOptional = categoryService.findById(id);
@@ -87,7 +87,7 @@ public class CategoryController {
 			categoryService.save(category);
 
 			return ResponseEntity.ok().body(
-					new MessageResponse("Updated category '" + oldCategoryName + "' to '" + category.getName() + "'"));
+					new MessageResponse("Đã thay đổi thể loại '" + oldCategoryName + "' thành '" + category.getName() + "'"));
 		}).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
 
