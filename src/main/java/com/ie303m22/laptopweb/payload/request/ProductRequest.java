@@ -6,27 +6,27 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class ProductRequest {
-	@NotEmpty(message = "Product name is required")
+	@NotEmpty(message = "Tên sản phẩm là bắt buộc")
 	private String name;
 
-	@NotEmpty(message = "Description name is required")
+	@NotEmpty(message = "Mô tả là bắt buộc")
 	private String description;
 
-	@NotEmpty(message = "Category name is required")
+	@NotEmpty(message = "Thể loại là bắt buộc")
 	private String categoryName;
 
-	@NotEmpty(message = "Brand name is required")
+	@NotEmpty(message = "Nhãn hiệu là bắt buộc")
 	private String brandName;
 
-	@NotNull(message = "Price is required")
-	@Min(value = 0, message = "Price must be greater than 0")
+	@NotNull(message = "Giá là bắt buộc")
+	@Min(value = 0, message = "Giá phải lớn hơn 0")
 	private int price;
 
-	@Min(value = 0, message = "Quantity must be greater than 0")
+	@Min(value = 0, message = "Số lượng phải lớn hơn 0")
 	private int quantity = 0;
 
-	@Min(value = 0, message = "Disount must be between 0 and 100")
-	@Max(value = 100, message = "Disount must be between 0 and 100")
+	@Min(value = 0, message = "Discount phải nằm từ 0 dến 100")
+	@Max(value = 100, message = "Discount phải nằm từ 0 đến 100")
 	private int discount = 0;
 
 	// Details List
