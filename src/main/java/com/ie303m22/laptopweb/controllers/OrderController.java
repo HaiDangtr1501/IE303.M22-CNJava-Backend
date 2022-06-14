@@ -161,7 +161,7 @@ public class OrderController {
 	}
 
 	@PutMapping(path = "/{id}", params = "cancel")
-	@PreAuthorize("hasRole('ROLE_USER')")
+	
 	public ResponseEntity<?> canceledOrder(@CurrentUser UserPrincipal userPrincipal, @PathVariable String id)
 			throws StripeException, MailException, MessagingException {
 		User user = userService.getCurrentUser(userPrincipal);
