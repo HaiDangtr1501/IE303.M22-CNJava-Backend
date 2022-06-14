@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -109,25 +110,25 @@ public class PaymentController {
 			response.setStatus(400);
 			return;
 		}
-
 		if ("checkout.session.completed".equals(event.getType())) {
 			Session session = (Session) event.getDataObjectDeserializer().getObject().orElseGet(null);
 			User user = userCredentialRepository.findByEmail(session.getCustomerEmail()).get().getUser();
 			List<Cart> carts = cartService.findByUserAndEnable(user, true);
-
+			
 			PaymentIntent paymentIntent = PaymentIntent.retrieve(session.getPaymentIntent());
-
+			
 			String chargeSuccessId = paymentIntent.getCharges().getData().stream()
 					.filter(charge -> charge.getStatus().equals("succeeded")).findAny().get().getId();
 			Order order = new Order(user, carts);
 			order.setSettled(true);
 			order.setPaymentMethod(EPaymentMethod.Stripe);
 			order.setStripeChagreId(chargeSuccessId);
-
+			
 			orderService.save(order);
-
+			
 			carts.forEach(cart -> cartService.remove(cart.getId()));
 		}
+		
 
 		response.setStatus(200);
 	}

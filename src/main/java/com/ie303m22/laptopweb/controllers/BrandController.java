@@ -54,13 +54,13 @@ public class BrandController {
 		EProductBrand brandName = EProductBrand.valueOf(brandRequest.getName());
 
 		if (brandService.existsBrandName(brandName.toString())) {
-			return ResponseEntity.badRequest().body(new MessageResponse("That brand already exists"));
+			return ResponseEntity.badRequest().body(new MessageResponse("Nhãn hiệu này đã tồn tại"));
 		}
 
 		Brand brand = new Brand(brandName);
 		brandService.save(brand);
 
-		return new ResponseEntity<>(new MessageResponse("Add brand '" + brand.getName() + "' successfully!"),
+		return new ResponseEntity<>(new MessageResponse("Thêm nhãn hiệu '" + brand.getName() + "' thành công!"),
 				HttpStatus.OK);
 	}
 
@@ -70,7 +70,7 @@ public class BrandController {
 		EProductBrand brandName = EProductBrand.valueOf(brandRequest.getName());
 
 		if (brandService.existsBrandName(brandName.toString())) {
-			return ResponseEntity.badRequest().body(new MessageResponse("That brand already exists"));
+			return ResponseEntity.badRequest().body(new MessageResponse("Nhãn hiệu này đã tồn tại"));
 		}
 
 		Optional<Brand> brandOptional = brandService.findById(id);
@@ -83,7 +83,7 @@ public class BrandController {
 			brandService.save(brand);
 
 			return ResponseEntity.ok()
-					.body(new MessageResponse("Updated brand '" + oldBrandName + "' to '" + brand.getName() + "'"));
+					.body(new MessageResponse("Đã thay đổi nhãn hiệu '" + oldBrandName + "' thành '" + brand.getName() + "'"));
 		}).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
 

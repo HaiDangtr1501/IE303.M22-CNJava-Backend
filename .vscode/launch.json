@@ -10,6 +10,17 @@
             "projectName": "web-ban-hang",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-WebBanHangApplication<laptop-web>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.ie303m22.laptopweb.WebBanHangApplication",
+            "projectName": "laptop-web",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }

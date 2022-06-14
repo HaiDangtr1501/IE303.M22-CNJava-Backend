@@ -186,7 +186,7 @@ public class AuthController {
 
 			// Kiểm tra subject của token có phải là subject của confirm user email
 			if (!claims.getSubject().equals(confirmUserEmailTokenSubject)) {
-				throw new BadRequestException("Invalid JWT subject");
+				throw new BadRequestException("JWT khônng hợp lệ!");
 			}
 
 			Optional<UserCredential> userCredentialOptional = userCredentialRepository
@@ -205,13 +205,13 @@ public class AuthController {
 			userCredential.setEmailVerified(true);
 			userCredentialRepository.save(userCredential);
 		} catch (SignatureException e) {
-			throw new BadRequestException("Invalid JWT signature");
+			throw new BadRequestException("Chữ ký JWT không hợp lệ!");
 		} catch (MalformedJwtException e) {
-			throw new BadRequestException("Invalid JWT token");
+			throw new BadRequestException("Token JWT không hợp lệ");
 		} catch (ExpiredJwtException e) {
 			Claims claims = e.getClaims();
 			if (!claims.getSubject().equals(confirmUserEmailTokenSubject)) {
-				throw new BadRequestException("Invalid JWT subject");
+				throw new BadRequestException("JWT không hợp lệ");
 			}
 
 			String email = claims.get("email", String.class);

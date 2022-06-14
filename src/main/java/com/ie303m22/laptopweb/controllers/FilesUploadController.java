@@ -45,11 +45,11 @@ public class FilesUploadController {
 				fileStorageService.save(file);
 				filenames.add(file.getOriginalFilename());
 			});
-			String message = "Uploaded the file successfully: " + filenames;
+			String message = "Đã upload thành công file: " + filenames;
 
 			return new ResponseEntity<>(new MessageResponse(message), HttpStatus.OK);
 		} catch (Exception e) {
-			String message = "Could not upload the file!";
+			String message = "Không thể upload file!";
 			return new ResponseEntity<>(new MessageResponse(message), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
